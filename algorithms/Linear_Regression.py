@@ -1,9 +1,10 @@
 import numpy as np
 
 def gradient(w, x, y):
+    print(x.shape)
     y_estimate = x.dot(w).flatten()
     y_error = y.flatten() - y_estimate
-    gradient = -(1/len(x))*y_error
+    gradient = -(1/len(x))*y_error.dot(x)
     return gradient, np.power(y_error, 2)
 
 if __name__ == '__main__':
@@ -26,6 +27,7 @@ if __name__ == '__main__':
 
     # Gradient Descent
     w = np.random.randn(2)
+    print(w.shape)
 
 
     alpha = 0.5
@@ -34,7 +36,7 @@ if __name__ == '__main__':
     iterations = 1
     while True:
         gradients, error = gradient(w, train_x, train_y)
-        new_w = w-alpha*gradients
+        new_w = w - (alpha*gradients)
 
         # converge when our model stops changing significantly
         if np.sum(abs(new_w - w)) < stopping_criteria:
